@@ -12,10 +12,11 @@
 <meta property="og:image" content="assets/poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#03070d">
+<meta name="author" content="Anil Madhavapeddy">
 <link rel="alternate" type="text/plain" href="llms.txt" title="A plain summary for agents">
 <link rel="preload" href="fonts/rajdhani-600-SGUMCLKM.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="app-UOYSZDUG.css">
-<script src="data-6c55737634.js"></script>
+<link rel="stylesheet" href="app-ZF7JLZGM.css">
+<script src="data-312391c340.js"></script>
 </head>
 <body>
 <main id="app">
@@ -28,6 +29,11 @@
         <svg class="reticle" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15"/><circle cx="20" cy="20" r="9" class="r2"/><path d="M20 1v8M20 31v8M1 20h8M31 20h8"/><circle cx="20" cy="20" r="2.5" class="dot"/></svg>
         <span class="name">TESSERA</span>
       </a>
+      <nav class="modes" aria-label="Ways in">
+        <button id="m-tour" class="mode" aria-pressed="false"><span class="long">How it works</span><span class="short">Tour</span></button>
+        <button id="m-deeper" class="mode" aria-pressed="false"><span class="long">Dive deeper</span><span class="short">Deeper</span></button>
+        <button id="m-map" class="mode" aria-pressed="false"><span class="long">Explore the map</span><span class="short">Explore</span></button>
+      </nav>
       <div class="player" role="toolbar" aria-label="Story controls">
         <button id="prev" class="ib" aria-label="Previous stage"><svg viewBox="0 0 24 24"><path d="M7 5v14M19 5l-9 7 9 7z"/></svg></button>
         <button id="play" class="ib big" aria-label="Play" data-state="paused"><svg viewBox="0 0 24 24" class="i-play"><path d="M7 4l13 8-13 8z"/></svg><svg viewBox="0 0 24 24" class="i-pause"><path d="M7 4v16M17 4v16"/></svg></button>
@@ -37,32 +43,31 @@
         <button id="cc" class="ib wide" aria-label="Captions" aria-pressed="false" title="Captions"><svg viewBox="0 0 30 24" class="cc"><rect x="1.5" y="3.5" width="27" height="17" rx="3"/><text x="15" y="16.4" text-anchor="middle">CC</text></svg></button>
         <button id="notes-mode" class="ib" aria-label="Always take side notes" title="Always take side notes" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 12h7c3 0 4-6 8-6M10 12c3 0 4 6 8 6"/><circle cx="20" cy="6" r="1.8"/><circle cx="20" cy="18" r="1.8"/></svg></button>
       </div>
-      <dl class="telemetry" aria-label="Where the camera is">
-        <div><dt>alt</dt><dd id="t-alt">–</dd></div><div><dt>lat</dt><dd id="t-lat">–</dd></div><div><dt>lon</dt><dd id="t-lon">–</dd></div>
-      </dl>
-      <nav class="links" aria-label="More">
-        <button id="take" class="ib" aria-label="Take the console" title="Take the console"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M12 1v5M12 18v5M1 12h5M18 12h5"/></svg></button>
-        <button id="to-story" class="ib" aria-label="Back to the story" title="Back to the story" hidden><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M3 12h13a5 5 0 0 1 0 10h-2"/></svg></button>
-        <a id="about-link" class="ib" href="#/about" aria-label="About" title="About"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.5"/></svg></a>
-        <a class="ib" href="https://geotessera.org" target="_blank" rel="noopener" aria-label="The TESSERA website" title="The TESSERA website"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c3 3.2 3 15.8 0 19M12 2.5c-3 3.2-3 15.8 0 19"/></svg></a>
-        <a class="ib" href="https://github.com/ucam-eo/tessera" target="_blank" rel="noopener" aria-label="The TESSERA code on GitHub" title="The TESSERA code on GitHub"><svg viewBox="0 0 24 24" class="gh"><path d="M12 1.5a10.5 10.5 0 0 0-3.3 20.5c.5.1.7-.2.7-.5v-1.8c-2.9.6-3.5-1.4-3.5-1.4-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1 .1 1.6 1.1 1.6 1.1.9 1.6 2.5 1.2 3.1.9.1-.7.4-1.2.7-1.4-2.3-.3-4.8-1.2-4.8-5.2 0-1.1.4-2.1 1.1-2.8-.1-.3-.5-1.4.1-2.8 0 0 .9-.3 2.9 1.1a9.8 9.8 0 0 1 5.2 0c2-1.4 2.9-1.1 2.9-1.1.6 1.4.2 2.5.1 2.8.7.7 1.1 1.7 1.1 2.8 0 4-2.5 4.9-4.8 5.2.4.3.7 1 .7 2v2.9c0 .3.2.6.7.5A10.5 10.5 0 0 0 12 1.5Z"/></svg></a>
-      </nav>
+      <button id="about-btn" class="tb" aria-haspopup="true" aria-expanded="false" aria-controls="about-menu">About<span class="caret" aria-hidden="true"></span></button>
       <i class="sweep" aria-hidden="true"></i>
     </div>
   </header>
 
   <nav id="rail" aria-label="Stages and side notes" hidden>
-    <p class="kicker">Stages and side notes</p>
     <ol>
+      <li class="part" data-part="tour"><p>Part 1 · How Tessera works <span class="len"></span></p></li>
       <li><button data-stage="orbit"><span class="alt">20,000 km</span><span class="name">An annual land fingerprint</span></button></li>
       <li><button data-stage="sensors"><span class="alt">790 km</span><span class="name">Radar and optical satellites</span></button></li>
       <li><button data-stage="dpixel"><span class="alt">10 m</span><span class="name">Learning from satellites</span></button></li>
+      <li class="part" data-part="deeper"><p>Part 2 · Diving deeper <span class="len"></span></p></li>
       <li><button data-stage="inference"><span class="alt">all land</span><span class="name">Scanning the planet</span></button></li>
       <li><button data-stage="tasks"><span class="alt">3 km</span><span class="name">Finding and labelling places</span></button></li>
       <li><button data-stage="missions"><span class="alt">the world</span><span class="name">Measuring forests by regression</span></button></li>
       <li><button data-stage="yours"><span class="alt">anywhere</span><span class="name">Explore the fingerprints yourself</span></button></li>
     </ol>
-    <a id="script-link" href="#/script">Read the script</a>
+    <p class="railfoot"><button id="rail-map">Explore the map yourself</button><a id="script-link" href="#/script">Read the script</a></p>
+  </nav>
+  <nav id="about-menu" class="drop" aria-label="About" hidden>
+    <a href="#/about">About this tour</a>
+    <a href="#/credits">Credits</a>
+    <a href="#/script">Read the script</a>
+    <a href="https://geotessera.org" target="_blank" rel="noopener">The Tessera website <span aria-hidden="true">↗</span></a>
+    <a href="https://github.com/ucam-eo/tessera" target="_blank" rel="noopener">The code on GitHub <span aria-hidden="true">↗</span></a>
   </nav>
 
   <p id="pairtag" aria-hidden="true">the same fingerprint</p>
@@ -70,9 +75,23 @@
   <aside id="sources" aria-label="Primary sources"><h2>Primary sources</h2><ol></ol></aside>
   <div id="panels"></div>
 
+  <section id="landing" hidden aria-labelledby="landing-h">
+    <h1 id="landing-h">Tessera</h1>
+    <p class="lede">Every ten-metre square of land on Earth, summed up in an annual fingerprint from a year of satellite observations.</p>
+    <button id="go-tour" class="go primary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5l15 8.5-15 8.5z"/></svg><span><b>How Tessera works</b><small id="len-tour"></small></span></button>
+    <button id="go-deeper" class="go"><span><b>Dive deeper</b><small id="len-deeper"></small></span></button>
+    <button id="go-map" class="go"><span><b>Explore the map yourself</b><small>Live fingerprints, anywhere on land</small></span></button>
+    <button id="landing-cc" class="capt" aria-pressed="false"><svg viewBox="0 0 24 24" class="cc" aria-hidden="true"><rect x="1.5" y="4" width="21" height="16" rx="3"/><text x="12" y="15.6" text-anchor="middle">CC</text></svg><span>Captions</span></button>
+  </section>
+  <section id="partcard" hidden aria-labelledby="partcard-h">
+    <h2 id="partcard-h">That is how Tessera works.</h2>
+    <p>Next, what the fingerprints can map, from similar places to the height of a forest.</p>
+    <button id="pc-deeper" class="go primary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5l15 8.5-15 8.5z"/></svg><span><b>Dive deeper</b><small id="len-deeper2"></small></span></button>
+    <button id="pc-map" class="go"><span><b>Explore the map yourself</b></span></button>
+  </section>
   <div id="starter" hidden>
   <button id="start" aria-label="Play the story with sound"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5l15 8.5-15 8.5z"/></svg></span></button>
-    <button id="start-cc" aria-pressed="false"><svg viewBox="0 0 24 24" class="cc" aria-hidden="true"><rect x="1.5" y="4" width="21" height="16" rx="3"/><text x="12" y="15.6" text-anchor="middle">CC</text></svg><span>Captions</span></button>
+    <button id="start-cc" class="capt" aria-pressed="false"><svg viewBox="0 0 24 24" class="cc" aria-hidden="true"><rect x="1.5" y="4" width="21" height="16" rx="3"/><text x="12" y="15.6" text-anchor="middle">CC</text></svg><span>Captions</span></button>
   </div>
   <p id="toast" role="status" aria-live="polite"></p>
   <div id="tour"></div>
@@ -117,10 +136,11 @@
       <li><a href="https://github.com/ucam-eo/tessera-eval">tessera-eval</a>, whose crop fields near Vienna and learning-curve method give the labels side note.</li>
       <li>Contains modified Copernicus Sentinel data (2025). Blue Marble: NASA Earth Observatory.</li>
     </ul>
-    <h2>Credits</h2>
+    <h2 id="credits">Credits</h2>
+    <p>Made by Anil Madhavapeddy, with thanks to Michael Dales, Sadiq Jaffer and Constantino Panagopulos for their feedback.</p>
     <p>The narration is read by a synthetic voice (Google's Gemini text-to-speech), the music was generated by Google's Lyria, and the side notes' panel texture and satellite drawings were made with an image model. Every number shown comes from the sources above. Built with three.js and zarrita.</p>
     <h2>Controls</h2>
-    <p>Space plays and pauses, the arrow keys move between stages, the stage's name in the top bar lists every stage and side note, M mutes, C turns captions on and off, and E takes the console. When a side note is offered, T takes it; in a side note, Escape goes back to the story. The branching button in the top bar takes every side note. In the console, drag to turn the planet, scroll or pinch to zoom, shift-drag to tilt, and click any land to scan it.</p>
+    <p>How it works, Dive deeper and Explore the map in the top bar are the three ways in. Space plays and pauses, the arrow keys move between stages, the stage's name in the top bar lists every stage and side note, M mutes, C turns captions on and off, and E explores the map. When a side note is offered, T takes it; in a side note, Escape goes back to the story. The branching button in the top bar takes every side note. In the console, drag to turn the planet, scroll or pinch to zoom, shift-drag to tilt, and click any land to scan it.</p>
   </div>
 </section>
 
@@ -129,6 +149,6 @@
     <h1 id="script-h" tabindex="-1">The script</h1><div id="script-body"></div></div>
 </section>
 <p id="sr" class="sr-only" aria-live="polite"></p>
-<script type="module" src="js/app-BIFT36MZ.js"></script>
+<script type="module" src="js/app-LPGSPPFN.js"></script>
 </body>
 </html>

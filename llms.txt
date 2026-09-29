@@ -4,6 +4,10 @@
 
 This page explains TESSERA as a narrated tour from orbit down to Cambridge, drawn live as a holographic console. It takes the kinds of downstream task in turn on live embeddings (similarity with a 3-D UMAP cloud, a nearest-neighbour classifier and how few labels it needs, and a small U-Net that outlines solar farms as a spatial head), then regression in published studies round the world, and then hands the console to the reader. Eleven narrated side notes explain single ideas in more detail. The notes below give the same facts in plain text.
 
+## How the page is organised
+
+A first visit offers three ways in, which also sit as tabs in the top bar: How it works (part 1: the fingerprint, the two satellites and learning from them, about 2 minutes, narrated), Dive deeper (part 2: scanning the planet, similarity, classification, spatial heads and regression, about 3 minutes), and Explore the map, a console for scanning live fingerprints anywhere on land. Part 1 stops at its end and offers part 2 or the map. The stage's name in the top bar lists every stage and side note.
+
 ## How TESSERA works
 
 - Inputs: Sentinel-2's ten optical bands (B2, B3, B4, B5, B6, B7, B8, B8A, B11, B12) and Sentinel-1's radar backscatter in two polarisations (VV and VH), for a whole year.
@@ -60,3 +64,8 @@ This page explains TESSERA as a narrated tour from orbit down to Cambridge, draw
 - `#/t/<note>`: a side note, played from its start.
 - `#/script`: the whole script, with the side notes in their places.
 - `#/about`: sources and credits.
+- `#/credits`: the credits.
+
+## Credits
+
+Made by Anil Madhavapeddy, with thanks to Michael Dales, Sadiq Jaffer and Constantino Panagopulos for their feedback. The narration is a synthetic voice (Gemini text-to-speech), the music is by Lyria, and the side notes' panel texture and satellite drawings were made with an image model.
