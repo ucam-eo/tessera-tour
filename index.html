@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="layout" content="page">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tessera: a tour from orbit to one field</title>
+<meta name="description" content="A narrated tour from orbit down to a single field that explains how Tessera turns a year of Sentinel-1 and Sentinel-2 observations into an annual fingerprint for every ten-metre square of land, and what those fingerprints can map, then hands you a console to scan real ones anywhere.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tessera: a tour from orbit to one field">
+<meta property="og:description" content="How Tessera gives every ten-metre square of land an annual fingerprint from a year of satellite observations, and what those fingerprints can map. Narrated, with live data.">
+<meta property="og:image" content="assets/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#03070d">
+<link rel="alternate" type="text/plain" href="llms.txt" title="A plain summary for agents">
+<link rel="preload" href="fonts/rajdhani-600-SGUMCLKM.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app-RS3BRWNB.css">
+<script src="data-6c55737634.js"></script>
+</head>
+<body>
+<main id="app">
+  <canvas id="gl" aria-label="The Earth, seen through the console" role="img"></canvas>
+  <div class="scan" aria-hidden="true"></div>
+
+  <header class="top">
+    <div class="bar">
+      <a class="brand" href="./" aria-label="Tessera: start again">
+        <svg class="reticle" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15"/><circle cx="20" cy="20" r="9" class="r2"/><path d="M20 1v8M20 31v8M1 20h8M31 20h8"/><circle cx="20" cy="20" r="2.5" class="dot"/></svg>
+        <span class="name">TESSERA</span>
+      </a>
+      <div class="player" role="toolbar" aria-label="Story controls">
+        <button id="prev" class="ib" aria-label="Previous stage"><svg viewBox="0 0 24 24"><path d="M7 5v14M19 5l-9 7 9 7z"/></svg></button>
+        <button id="play" class="ib big" aria-label="Play" data-state="paused"><svg viewBox="0 0 24 24" class="i-play"><path d="M7 4l13 8-13 8z"/></svg><svg viewBox="0 0 24 24" class="i-pause"><path d="M7 4v16M17 4v16"/></svg></button>
+        <button id="next" class="ib" aria-label="Next stage"><svg viewBox="0 0 24 24"><path d="M17 5v14M5 5l9 7-9 7z"/></svg></button>
+        <div class="timeline"><div id="segs" class="segs"></div><button id="chapters-btn" class="time" aria-haspopup="true" aria-expanded="false" aria-controls="rail" aria-label="Stages and side notes"><span id="t-now">0:00</span><span class="caret" aria-hidden="true"></span><span class="sep">/</span><span id="t-all">0:00</span></button></div>
+        <button id="mute" class="ib meter" aria-label="Sound: on. Mute" aria-pressed="false" data-state="on"><svg viewBox="0 0 24 24" class="spk"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w" d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/><path class="x" d="M16 9l5 6M21 9l-5 6"/></svg><span class="vu" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></button>
+        <button id="cc" class="ib" aria-label="Captions" aria-pressed="false" title="Captions"><svg viewBox="0 0 24 24" class="cc"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><text x="12" y="15.6" text-anchor="middle">CC</text></svg></button>
+        <button id="notes-mode" class="ib" aria-label="Always take side notes" title="Always take side notes" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 12h7c3 0 4-6 8-6M10 12c3 0 4 6 8 6"/><circle cx="20" cy="6" r="1.8"/><circle cx="20" cy="18" r="1.8"/></svg></button>
+      </div>
+      <dl class="telemetry" aria-label="Where the camera is">
+        <div><dt>alt</dt><dd id="t-alt">–</dd></div><div><dt>lat</dt><dd id="t-lat">–</dd></div><div><dt>lon</dt><dd id="t-lon">–</dd></div>
+      </dl>
+      <nav class="links" aria-label="More">
+        <button id="take" class="ib" aria-label="Take the console" title="Take the console"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M12 1v5M12 18v5M1 12h5M18 12h5"/></svg></button>
+        <button id="to-story" class="ib" aria-label="Back to the story" title="Back to the story" hidden><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M3 12h13a5 5 0 0 1 0 10h-2"/></svg></button>
+        <a id="about-link" class="ib" href="#/about" aria-label="About" title="About"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.5"/></svg></a>
+        <a class="ib" href="https://geotessera.org" target="_blank" rel="noopener" aria-label="The TESSERA website" title="The TESSERA website"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c3 3.2 3 15.8 0 19M12 2.5c-3 3.2-3 15.8 0 19"/></svg></a>
+        <a class="ib" href="https://github.com/ucam-eo/tessera" target="_blank" rel="noopener" aria-label="The TESSERA code on GitHub" title="The TESSERA code on GitHub"><svg viewBox="0 0 24 24" class="gh"><path d="M12 1.5a10.5 10.5 0 0 0-3.3 20.5c.5.1.7-.2.7-.5v-1.8c-2.9.6-3.5-1.4-3.5-1.4-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1 .1 1.6 1.1 1.6 1.1.9 1.6 2.5 1.2 3.1.9.1-.7.4-1.2.7-1.4-2.3-.3-4.8-1.2-4.8-5.2 0-1.1.4-2.1 1.1-2.8-.1-.3-.5-1.4.1-2.8 0 0 .9-.3 2.9 1.1a9.8 9.8 0 0 1 5.2 0c2-1.4 2.9-1.1 2.9-1.1.6 1.4.2 2.5.1 2.8.7.7 1.1 1.7 1.1 2.8 0 4-2.5 4.9-4.8 5.2.4.3.7 1 .7 2v2.9c0 .3.2.6.7.5A10.5 10.5 0 0 0 12 1.5Z"/></svg></a>
+      </nav>
+      <i class="sweep" aria-hidden="true"></i>
+    </div>
+  </header>
+
+  <nav id="rail" aria-label="Stages and side notes" hidden>
+    <p class="kicker">Stages and side notes</p>
+    <ol>
+      <li><button data-stage="orbit"><span class="alt">20,000 km</span><span class="name">An annual land fingerprint</span></button></li>
+      <li><button data-stage="sensors"><span class="alt">790 km</span><span class="name">Radar and optical satellites</span></button></li>
+      <li><button data-stage="dpixel"><span class="alt">10 m</span><span class="name">Learning from satellites</span></button></li>
+      <li><button data-stage="inference"><span class="alt">all land</span><span class="name">Scanning the planet</span></button></li>
+      <li><button data-stage="tasks"><span class="alt">3 km</span><span class="name">Finding and labelling places</span></button></li>
+      <li><button data-stage="missions"><span class="alt">the world</span><span class="name">Measuring forests by regression</span></button></li>
+      <li><button data-stage="yours"><span class="alt">anywhere</span><span class="name">Explore the fingerprints yourself</span></button></li>
+    </ol>
+    <a id="script-link" href="#/script">Read the script</a>
+  </nav>
+
+  <div id="tags" aria-hidden="true"><span id="tag-s2">Sentinel-2 <b>786 km</b></span><span id="tag-s1">Sentinel-1 <b>693 km</b></span></div>
+  <aside id="sources" aria-label="Primary sources"><h2>Primary sources</h2><ol></ol></aside>
+  <div id="panels"></div>
+
+  <button id="start" hidden aria-label="Play the story with sound"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5l15 8.5-15 8.5z"/></svg></span></button>
+  <div id="tour"></div>
+  <aside id="offer" hidden aria-labelledby="offer-kicker">
+    <p id="offer-kicker" class="kicker">Side note coming up</p>
+    <ul id="offer-list"></ul>
+    <label class="always"><input type="checkbox" id="offer-always"> Always take side notes</label>
+  </aside>
+  <section id="note" hidden aria-labelledby="note-title">
+    <header><p class="kicker">Side note</p><h2 id="note-title"></h2><span id="note-src" class="src"></span></header>
+    <div class="note-stage"></div>
+    <footer><div id="note-steps" aria-hidden="true"></div><p id="note-refs" class="ref"></p><button id="note-skip">Back to the story <span aria-hidden="true">→</span></button></footer>
+  </section>
+  <div id="captions" aria-hidden="true" hidden><span id="cap-who"></span><p id="cap-text"></p></div>
+
+  <section id="explore" hidden tabindex="-1" aria-label="Your console"></section>
+  <p id="debug" hidden></p>
+</main>
+
+<section id="about" class="fullpage" role="dialog" aria-modal="true" aria-labelledby="about-h" hidden>
+  <div class="page">
+    <button id="about-close" aria-label="Close">×</button>
+    <h1 id="about-h" tabindex="-1">About this tour</h1>
+    <p>TESSERA turns the time series that the Sentinel-1 radar and Sentinel-2 optical satellites record for every ten-metre square of land into an annual fingerprint: 128 numbers a year that describe what the ground is and how it changes through the seasons. Because the fingerprints are made once for the whole planet, a new map often needs only a few labels and a small model, instead of downloading, cloud masking and training from scratch.</p>
+    <h2>Side notes</h2>
+    <p>Side notes explain one idea in more detail, such as how Tessera learns without labels or how the solar-farm network works. As the story nears one, a card offers it: choose it, and it plays when the sentence ends; leave it, and the story carries on. Every stage and side note is also listed under the stage's name in the top bar, and any of them can be started from there.</p>
+    <h2>What you see</h2>
+    <ul>
+      <li>The globe is NASA's Blue Marble. Its fingerprint colours are the store's <code>global_rgb</code> layer: the first three of the 128 numbers of the 2025 fingerprints, stretched.</li>
+      <li>The d-pixel is a real field south-west of Cambridge: every Sentinel-2 pass of 2025 (from Element 84's Earth Search, with the scene classification marking clouds), every Sentinel-1 pass (Microsoft Planetary Computer), and its real TESSERA embedding.</li>
+      <li>The training hexagons show that the training data spans every continent, as the papers' maps do (CVPR figure 9, TESSERA v2 figure 5); they are not its exact places.</li>
+      <li>The Cambridge window, and every scan you make, streams from the TESSERA v1.1 store on Source Cooperative as you watch. Similarity is the cosine between fingerprints, and classification is a nearest-neighbour vote among your labels, as in the interactive tool the CVPR paper describes. The solar-farm network is tze's U-Net, run in your browser. Every result shown links to where it is in its source.</li>
+      <li>The narration describes Tessera as it stands in its second version: a large model distilled into a small one, with the most important values first in each fingerprint. The fingerprints streamed here are the published version 1.1 for 2025, and version 1.0 for the solar model's 2024; the second version's fingerprints for 2017 to 2025 are being released.</li>
+    </ul>
+    <h2>Sources</h2>
+    <ul class="refs">
+      <li>Feng Z., Atzberger C., Jaffer S., Knezevic J., Sormunen S., Young R., Lisaius M. C., Immitzer M., Jackson T., Ball J., Coomes D. A., Madhavapeddy A., Blake A. and Keshav S. <a href="https://arxiv.org/html/2506.20380">TESSERA: Temporal Embeddings of Surface Spectra for Earth Representation and Analysis</a>. CVPR 2026. <a href="https://arxiv.org/abs/2506.20380">arXiv:2506.20380</a>.</li>
+      <li>Feng Z. <i>et al.</i> <a href="https://doi.org/10.2139/ssrn.6142416">Applications of the TESSERA Geospatial Foundation Model to Diverse Environmental Mapping Tasks</a>. SSRN 6142416, 2026 (preprint).</li>
+      <li>TESSERA embeddings v1.1 (dClimate), <a href="https://source.coop/tessera/tessera">Source Cooperative</a>. Code and weights at <a href="https://github.com/ucam-eo/tessera">github.com/ucam-eo/tessera</a>.</li>
+      <li>The reader and the loading console are adapted from <a href="https://github.com/ucam-eo/tze">tze</a>, the TESSERA Zarr Explorer.</li>
+      <li>Feng Z., Jaffer S., Shokar I. <i>et al.</i> <a href="https://arxiv.org/html/2607.03949">TESSERA v2: Scaling Pixel-wise Earth Foundation Models</a>. <a href="https://arxiv.org/abs/2607.03949">arXiv:2607.03949</a>, 2026.</li>
+      <li><a href="https://github.com/ucam-eo/tessera-eval">tessera-eval</a>, whose crop fields near Vienna and learning-curve method give the labels side note.</li>
+      <li>Contains modified Copernicus Sentinel data (2025). Blue Marble: NASA Earth Observatory.</li>
+    </ul>
+    <h2>Credits</h2>
+    <p>The narration is read by a synthetic voice (Google's Gemini text-to-speech), the music was generated by Google's Lyria, and the side notes' panel texture and satellite drawings were made with an image model. Every number shown comes from the sources above. Built with three.js and zarrita.</p>
+    <h2>Controls</h2>
+    <p>Space plays and pauses, the arrow keys move between stages, the stage's name in the top bar lists every stage and side note, M mutes, C turns captions on and off, and E takes the console. When a side note is offered, T takes it; in a side note, Escape goes back to the story. The branching button in the top bar takes every side note. In the console, drag to turn the planet, scroll or pinch to zoom, shift-drag to tilt, and click any land to scan it.</p>
+  </div>
+</section>
+
+<section id="scriptpage" class="fullpage" role="dialog" aria-modal="true" aria-labelledby="script-h" hidden>
+  <div class="page"><button id="script-close" aria-label="Close">×</button>
+    <h1 id="script-h" tabindex="-1">The script</h1><div id="script-body"></div></div>
+</section>
+<p id="sr" class="sr-only" aria-live="polite"></p>
+<script type="module" src="js/app-RYKURREM.js"></script>
+</body>
+</html>
