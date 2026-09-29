@@ -14,7 +14,7 @@
 <meta name="theme-color" content="#03070d">
 <link rel="alternate" type="text/plain" href="llms.txt" title="A plain summary for agents">
 <link rel="preload" href="fonts/rajdhani-600-SGUMCLKM.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="app-RS3BRWNB.css">
+<link rel="stylesheet" href="app-UOYSZDUG.css">
 <script src="data-6c55737634.js"></script>
 </head>
 <body>
@@ -34,7 +34,7 @@
         <button id="next" class="ib" aria-label="Next stage"><svg viewBox="0 0 24 24"><path d="M17 5v14M5 5l9 7-9 7z"/></svg></button>
         <div class="timeline"><div id="segs" class="segs"></div><button id="chapters-btn" class="time" aria-haspopup="true" aria-expanded="false" aria-controls="rail" aria-label="Stages and side notes"><span id="t-now">0:00</span><span class="caret" aria-hidden="true"></span><span class="sep">/</span><span id="t-all">0:00</span></button></div>
         <button id="mute" class="ib meter" aria-label="Sound: on. Mute" aria-pressed="false" data-state="on"><svg viewBox="0 0 24 24" class="spk"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w" d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/><path class="x" d="M16 9l5 6M21 9l-5 6"/></svg><span class="vu" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></button>
-        <button id="cc" class="ib" aria-label="Captions" aria-pressed="false" title="Captions"><svg viewBox="0 0 24 24" class="cc"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><text x="12" y="15.6" text-anchor="middle">CC</text></svg></button>
+        <button id="cc" class="ib wide" aria-label="Captions" aria-pressed="false" title="Captions"><svg viewBox="0 0 30 24" class="cc"><rect x="1.5" y="3.5" width="27" height="17" rx="3"/><text x="15" y="16.4" text-anchor="middle">CC</text></svg></button>
         <button id="notes-mode" class="ib" aria-label="Always take side notes" title="Always take side notes" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 12h7c3 0 4-6 8-6M10 12c3 0 4 6 8 6"/><circle cx="20" cy="6" r="1.8"/><circle cx="20" cy="18" r="1.8"/></svg></button>
       </div>
       <dl class="telemetry" aria-label="Where the camera is">
@@ -65,11 +65,16 @@
     <a id="script-link" href="#/script">Read the script</a>
   </nav>
 
+  <p id="pairtag" aria-hidden="true">the same fingerprint</p>
   <div id="tags" aria-hidden="true"><span id="tag-s2">Sentinel-2 <b>786 km</b></span><span id="tag-s1">Sentinel-1 <b>693 km</b></span></div>
   <aside id="sources" aria-label="Primary sources"><h2>Primary sources</h2><ol></ol></aside>
   <div id="panels"></div>
 
-  <button id="start" hidden aria-label="Play the story with sound"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5l15 8.5-15 8.5z"/></svg></span></button>
+  <div id="starter" hidden>
+  <button id="start" aria-label="Play the story with sound"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5l15 8.5-15 8.5z"/></svg></span></button>
+    <button id="start-cc" aria-pressed="false"><svg viewBox="0 0 24 24" class="cc" aria-hidden="true"><rect x="1.5" y="4" width="21" height="16" rx="3"/><text x="12" y="15.6" text-anchor="middle">CC</text></svg><span>Captions</span></button>
+  </div>
+  <p id="toast" role="status" aria-live="polite"></p>
   <div id="tour"></div>
   <aside id="offer" hidden aria-labelledby="offer-kicker">
     <p id="offer-kicker" class="kicker">Side note coming up</p>
@@ -77,9 +82,9 @@
     <label class="always"><input type="checkbox" id="offer-always"> Always take side notes</label>
   </aside>
   <section id="note" hidden aria-labelledby="note-title">
-    <header><p class="kicker">Side note</p><h2 id="note-title"></h2><span id="note-src" class="src"></span></header>
+    <header><p class="kicker">Side note</p><h2 id="note-title"></h2><button id="note-close" aria-label="Close the side note and go back to the story" title="Back to the story">×</button></header>
     <div class="note-stage"></div>
-    <footer><div id="note-steps" aria-hidden="true"></div><p id="note-refs" class="ref"></p><button id="note-skip">Back to the story <span aria-hidden="true">→</span></button></footer>
+    <footer><div id="note-steps" aria-hidden="true"></div><p id="note-refs" class="ref"></p></footer>
   </section>
   <div id="captions" aria-hidden="true" hidden><span id="cap-who"></span><p id="cap-text"></p></div>
 
@@ -124,6 +129,6 @@
     <h1 id="script-h" tabindex="-1">The script</h1><div id="script-body"></div></div>
 </section>
 <p id="sr" class="sr-only" aria-live="polite"></p>
-<script type="module" src="js/app-RYKURREM.js"></script>
+<script type="module" src="js/app-BIFT36MZ.js"></script>
 </body>
 </html>
